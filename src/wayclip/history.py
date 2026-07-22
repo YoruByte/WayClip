@@ -3,23 +3,36 @@ WayClip History API.
 """
 
 from wayclip.backend import run_cliphist
+from wayclip.models import HistoryEntry
+
 
 def list_history():
-    """Return clipboard history as a list of lines."""
+    """Return clipboard history as structured data."""
+
     output = run_cliphist("list")
 
     if not output.strip():
         return []
 
-    return output.splitlines()
+    entries = []
+
+    for line in output.splitlines():
+        parts = line.split("\t", 1)
+
+        if len(parts) != 2:
+            continue
+
+        entries.append(
+            HistoryEntry(
+                id=parts[0],
+                preview=parts[1],
+            )
+        )
+
+    return entries
 
 
-if __name__ == "__main__":
-    history = list_history()
+def decode_entry(entry_id: str):
+    """Return the full contents of a clipboard entry."""
 
-    print(f"History contains {len(history)} entries.")
-
-    if history:
-        print()
-        print("Newest entry:")
-        print(history[0])
+    return run_cliphist("decode", entry_id)
