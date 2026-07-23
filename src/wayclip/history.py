@@ -2,7 +2,7 @@
 WayClip History API.
 """
 
-from wayclip.backend import run_cliphist
+from wayclip.backend import run_cliphist, copy_to_clipboard
 from wayclip.models import HistoryEntry
 
 
@@ -36,3 +36,10 @@ def decode_entry(entry_id: str):
     """Return the full contents of a clipboard entry."""
 
     return run_cliphist("decode", entry_id)
+
+
+def restore_entry(entry_id: str):
+    """Restore a clipboard entry."""
+
+    text = decode_entry(entry_id)
+    copy_to_clipboard(text)

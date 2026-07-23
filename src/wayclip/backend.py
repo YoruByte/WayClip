@@ -50,6 +50,17 @@ def wipe():
     return run_cliphist("wipe")
 
 
+def copy_to_clipboard(text: str):
+    """Copy text to the Wayland clipboard."""
+
+    subprocess.run(
+        ["wl-copy"],
+        input=text,
+        text=True,
+        check=True,
+    )
+
+
 if __name__ == "__main__":
     print("WayClip Backend Test")
     print("--------------------")
