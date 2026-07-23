@@ -50,3 +50,10 @@ def delete_entry(entry: HistoryEntry):
     """Delete a clipboard entry."""
 
     delete(entry.raw)
+
+def clear_history():
+    """Delete all clipboard history."""
+
+    from wayclip.backend import wipe
+
+    wipe()
