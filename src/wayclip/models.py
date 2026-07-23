@@ -1,13 +1,10 @@
-"""
-WayClip data models.
-"""
-
 from dataclasses import dataclass
 
 
-@dataclass(slots=True)
+@dataclass
 class HistoryEntry:
-    """A single clipboard history entry."""
+    """Represents a single clipboard history entry."""
 
     id: str
     preview: str
+    raw: str

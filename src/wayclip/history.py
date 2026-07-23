@@ -2,7 +2,7 @@
 WayClip History API.
 """
 
-from wayclip.backend import run_cliphist, copy_to_clipboard
+from wayclip.backend import run_cliphist, copy_to_clipboard, delete
 from wayclip.models import HistoryEntry
 
 
@@ -26,6 +26,7 @@ def list_history():
             HistoryEntry(
                 id=parts[0],
                 preview=parts[1],
+                raw=line,
             )
         )
 
@@ -43,3 +44,9 @@ def restore_entry(entry_id: str):
 
     text = decode_entry(entry_id)
     copy_to_clipboard(text)
+
+
+def delete_entry(entry: HistoryEntry):
+    """Delete a clipboard entry."""
+
+    delete(entry.raw)

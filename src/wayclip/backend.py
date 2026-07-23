@@ -40,10 +40,19 @@ def decode(entry_id: str):
     return run_cliphist("decode", entry_id)
 
 
-def delete(entry_id: str):
+def delete(raw_line: str):
     """Delete a clipboard entry."""
-    return run_cliphist("delete", entry_id)
 
+    require_cliphist()
+
+    # cliphist delete reads the selected entry from stdin.
+    subprocess.run(
+        [CLIPHIST, "delete"],
+        input=raw_line,
+        text=True,
+        check=True,
+    )
+    
 
 def wipe():
     """Clear clipboard history."""
